@@ -3,20 +3,48 @@ import { ChevronLeft, ChevronRight, Clock, MapPin } from "lucide-react";
 import { useMemo, useState } from "react";
 import Shell from "@/components/Shell";
 import TopBar from "@/components/TopBar";
+import LevelSelector from "@/components/LevelSelector";
+import { useLevel, type EducationLevel } from "@/lib/level";
 
 export const Route = createFileRoute("/schedule")({ component: Schedule });
 
-const EVENTS: Record<string, { title: string; time: string; where: string; color: string }[]> = {
-  "3": [{ title: "MIT Info Session", time: "10:00 AM", where: "Online", color: "var(--grad-primary)" }],
-  "8": [{ title: "IELTS Exam", time: "9:00 AM", where: "British Council", color: "linear-gradient(135deg,#F59E0B,#F97316)" }],
-  "14": [
-    { title: "NUS Application Deadline", time: "All day", where: "—", color: "linear-gradient(135deg,#10B981,#06B6D4)" },
-    { title: "Oxford Interview", time: "3:00 PM", where: "Video Call", color: "var(--grad-primary)" },
-  ],
-  "22": [{ title: "Scholarship Workshop", time: "2:00 PM", where: "Univers HQ", color: "linear-gradient(135deg,#EC4899,#8B5CF6)" }],
+type Ev = { title: string; time: string; where: string; color: string };
+const EVENTS_BY_LEVEL: Record<EducationLevel, Record<string, Ev[]>> = {
+  TK: {
+    "5":  [{ title: "Open House — Tunas Bangsa", time: "9:00 AM", where: "Jakarta Selatan", color: "var(--grad-primary)" }],
+    "12": [{ title: "Parenting Workshop", time: "10:00 AM", where: "Online", color: "linear-gradient(135deg,#EC4899,#8B5CF6)" }],
+    "20": [{ title: "TK Registration Deadline", time: "All day", where: "—", color: "linear-gradient(135deg,#10B981,#06B6D4)" }],
+  },
+  SD: {
+    "8":  [{ title: "SD Cendekia Trial Day", time: "8:00 AM", where: "Jakarta", color: "var(--grad-primary)" }],
+    "15": [{ title: "Cambridge Primary Test", time: "9:00 AM", where: "Global Mandiri", color: "linear-gradient(135deg,#F59E0B,#F97316)" }],
+    "25": [{ title: "PPDB SD Negeri", time: "All day", where: "Online", color: "linear-gradient(135deg,#10B981,#06B6D4)" }],
+  },
+  SMP: {
+    "3":  [{ title: "Robotics Competition", time: "10:00 AM", where: "Labschool", color: "linear-gradient(135deg,#F59E0B,#F97316)" }],
+    "10": [{ title: "SMP Entrance Test", time: "8:00 AM", where: "Global Sevilla", color: "var(--grad-primary)" }],
+    "18": [{ title: "Language Camp Registration", time: "All day", where: "Online", color: "linear-gradient(135deg,#EC4899,#8B5CF6)" }],
+  },
+  SMA: {
+    "6":  [{ title: "UTBK Practice Test", time: "9:00 AM", where: "Online", color: "var(--grad-primary)" }],
+    "14": [{ title: "Scholarship Workshop — LPDP", time: "2:00 PM", where: "Univers HQ", color: "linear-gradient(135deg,#EC4899,#8B5CF6)" }],
+    "22": [{ title: "SMA Kanisius Open Day", time: "9:00 AM", where: "Jakarta", color: "linear-gradient(135deg,#10B981,#06B6D4)" }],
+    "28": [{ title: "SMK Telkom Entrance Exam", time: "8:00 AM", where: "Jakarta", color: "linear-gradient(135deg,#F59E0B,#F97316)" }],
+  },
+  UNIVERSITY: {
+    "3":  [{ title: "MIT Info Session", time: "10:00 AM", where: "Online", color: "var(--grad-primary)" }],
+    "8":  [{ title: "IELTS Exam", time: "9:00 AM", where: "British Council", color: "linear-gradient(135deg,#F59E0B,#F97316)" }],
+    "14": [
+      { title: "NUS Application Deadline", time: "All day", where: "—", color: "linear-gradient(135deg,#10B981,#06B6D4)" },
+      { title: "Oxford Interview", time: "3:00 PM", where: "Video Call", color: "var(--grad-primary)" },
+    ],
+    "22": [{ title: "Scholarship Workshop", time: "2:00 PM", where: "Univers HQ", color: "linear-gradient(135deg,#EC4899,#8B5CF6)" }],
+  },
 };
 
 function Schedule() {
+  const { level } = useLevel();
+  const EVENTS = EVENTS_BY_LEVEL[level];
   const today = new Date();
   const [month, setMonth] = useState(today.getMonth());
   const [year, setYear] = useState(today.getFullYear());
@@ -41,6 +69,7 @@ function Schedule() {
   return (
     <Shell>
       <TopBar />
+      <LevelSelector />
       <h1 className="mt-4 text-2xl font-bold animate-fade-up">Schedule</h1>
       <p className="text-xs text-muted-foreground animate-fade-up">Track your applications & important dates</p>
 
@@ -80,7 +109,7 @@ function Schedule() {
           <div className="glass rounded-2xl p-6 text-center text-xs text-muted-foreground">No events scheduled</div>
         ) : (
           <div className="space-y-2">
-            {events.map((e, i) => (
+            {events.map((e: Ev, i: number) => (
               <div key={i} className="glass rounded-2xl p-3 flex gap-3 animate-fade-up">
                 <div className="w-1.5 rounded-full" style={{ background: e.color }} />
                 <div className="flex-1 min-w-0">

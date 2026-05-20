@@ -23,6 +23,7 @@ function ApplyPage() {
         full_name: form.full_name, email: form.email, phone: form.phone,
         program: form.program, gpa: form.gpa ? Number(form.gpa) : undefined,
         cv_url: form.cv_name || undefined, motivation: form.motivation,
+        education_level: (u as any).education_level,
       });
     },
     onSuccess: () => { toast.success("Application submitted!"); setSubmitted(true); },

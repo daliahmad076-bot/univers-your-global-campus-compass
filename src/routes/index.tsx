@@ -4,17 +4,29 @@ import { ChevronRight, Search, Star, Sparkles } from "lucide-react";
 import * as Icons from "lucide-react";
 import Shell from "@/components/Shell";
 import TopBar from "@/components/TopBar";
+import LevelSelector from "@/components/LevelSelector";
 import { fetchCategories, fetchUniversities } from "@/lib/db";
+import { useLevel, levelLabel } from "@/lib/level";
 import { useState } from "react";
 
 export const Route = createFileRoute("/")({ component: Home });
 
+const HERO_BY_LEVEL: Record<string, { tag: string; title: string; sub: string }> = {
+  TK: { tag: "AI-powered", title: "Start Their\nJourney!", sub: "Discover premium kindergartens & parenting programs." },
+  SD: { tag: "AI-powered", title: "Build Strong\nFoundations!", sub: "Find elementary schools that nurture curious minds." },
+  SMP: { tag: "AI-powered", title: "Grow Their\nTalents!", sub: "Top junior high schools with STEM, sports & language." },
+  SMA: { tag: "AI-powered", title: "Prepare For\nThe Future!", sub: "Senior high & vocational schools with scholarship pipelines." },
+  UNIVERSITY: { tag: "AI-powered", title: "Discover Your\nFuture!", sub: "Find the right university, anywhere in the world." },
+};
+
 function Home() {
   const nav = useNavigate();
   const [q, setQ] = useState("");
-  const { data: categories = [] } = useQuery({ queryKey: ["cats"], queryFn: fetchCategories });
-  const { data: universities = [] } = useQuery({ queryKey: ["unis-popular"], queryFn: () => fetchUniversities() });
+  const { level } = useLevel();
+  const { data: categories = [] } = useQuery({ queryKey: ["cats", level], queryFn: () => fetchCategories(level) });
+  const { data: universities = [] } = useQuery({ queryKey: ["unis-popular", level], queryFn: () => fetchUniversities({ level }) });
   const popular = universities.filter((u) => u.is_popular).slice(0, 8);
+  const hero = HERO_BY_LEVEL[level];
 
   function go() {
     nav({ to: "/search", search: { q } as any });
@@ -23,6 +35,7 @@ function Home() {
   return (
     <Shell>
       <TopBar />
+      <LevelSelector />
 
       {/* Hero */}
       <div className="mt-5 animate-fade-up rounded-3xl p-5 text-white relative overflow-hidden shadow-xl"
@@ -32,10 +45,10 @@ function Home() {
         <div className="relative">
           <div className="inline-flex items-center gap-1.5 glass rounded-full px-2.5 py-1 text-[10px] font-medium"
                style={{ background: "rgba(255,255,255,0.2)", borderColor: "rgba(255,255,255,0.4)" }}>
-            <Sparkles className="w-3 h-3" /> AI-powered
+            <Sparkles className="w-3 h-3" /> {hero.tag} · {levelLabel(level)}
           </div>
-          <h2 className="mt-2 text-2xl font-bold leading-tight">Discover Your<br/>Future!</h2>
-          <p className="mt-1 text-xs text-white/85 max-w-[70%]">Find the right school or university, anywhere in the world.</p>
+          <h2 className="mt-2 text-2xl font-bold leading-tight whitespace-pre-line">{hero.title}</h2>
+          <p className="mt-1 text-xs text-white/85 max-w-[70%]">{hero.sub}</p>
           <button onClick={() => nav({ to: "/search" })}
             className="press mt-4 inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold"
             style={{ background: "rgba(255,255,255,0.2)", border: "1px solid rgba(255,255,255,0.5)", backdropFilter: "blur(10px)" }}>
