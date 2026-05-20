@@ -52,6 +52,7 @@ export async function submitApplication(input: {
   university_id: string; university_name: string;
   full_name: string; email: string; phone?: string;
   program: string; gpa?: number; cv_url?: string; motivation?: string;
+  education_level?: EducationLevel;
 }) {
   const { error } = await supabase.from("applications").insert(input);
   if (error) throw error;
