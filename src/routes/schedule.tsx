@@ -43,6 +43,8 @@ const EVENTS_BY_LEVEL: Record<EducationLevel, Record<string, Ev[]>> = {
 };
 
 function Schedule() {
+  const { level } = useLevel();
+  const EVENTS = EVENTS_BY_LEVEL[level];
   const today = new Date();
   const [month, setMonth] = useState(today.getMonth());
   const [year, setYear] = useState(today.getFullYear());
@@ -67,6 +69,7 @@ function Schedule() {
   return (
     <Shell>
       <TopBar />
+      <LevelSelector />
       <h1 className="mt-4 text-2xl font-bold animate-fade-up">Schedule</h1>
       <p className="text-xs text-muted-foreground animate-fade-up">Track your applications & important dates</p>
 
@@ -106,7 +109,7 @@ function Schedule() {
           <div className="glass rounded-2xl p-6 text-center text-xs text-muted-foreground">No events scheduled</div>
         ) : (
           <div className="space-y-2">
-            {events.map((e, i) => (
+            {events.map((e: Ev, i: number) => (
               <div key={i} className="glass rounded-2xl p-3 flex gap-3 animate-fade-up">
                 <div className="w-1.5 rounded-full" style={{ background: e.color }} />
                 <div className="flex-1 min-w-0">
