@@ -15,7 +15,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { title: "Univers — Discover Your Future" },
       { name: "description", content: "Univers is your intelligent education companion to discover schools and universities worldwide." },
     ],
-    links: [{ rel: "stylesheet", href: appCss }],
+    links: [
+      { rel: "stylesheet", href: appCss },
+      { rel: "icon", type: "image/jpeg", href: "/favicon.jpg" },
+      { rel: "shortcut icon", href: "/favicon.jpg" },
+      { rel: "apple-touch-icon", href: "/apple-touch-icon.jpg" },
+    ],
   }),
   shellComponent: RootShell,
   component: RootComponent,
