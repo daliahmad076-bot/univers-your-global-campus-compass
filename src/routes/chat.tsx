@@ -100,11 +100,12 @@ function Chat() {
   return (
     <Shell>
       <TopBar />
+      <LevelSelector />
       <div className="mt-4 flex items-center gap-2 animate-fade-up">
         <div className="w-9 h-9 rounded-full gradient-primary grid place-items-center"><Sparkles className="w-4 h-4 text-white" /></div>
         <div>
           <h1 className="text-base font-bold leading-tight">AI Education Advisor</h1>
-          <p className="text-[11px] text-muted-foreground">Personalized guidance, 24/7</p>
+          <p className="text-[11px] text-muted-foreground">{levelLabel(level)} · Personalized guidance, 24/7</p>
         </div>
       </div>
 
@@ -121,7 +122,7 @@ function Chat() {
       {messages.length <= 1 && (
         <div className="mt-5 space-y-2 animate-fade-up">
           <p className="text-[11px] text-muted-foreground font-medium">Try asking:</p>
-          {STARTERS.map((s) => (
+          {STARTERS[level].map((s) => (
             <button key={s} onClick={() => send(s)} className="press w-full text-left glass rounded-2xl px-4 py-3 text-xs">
               {s}
             </button>
