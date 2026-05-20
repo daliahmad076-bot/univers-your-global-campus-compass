@@ -26,6 +26,7 @@ const STATUS_COLORS: Record<string, string> = {
 };
 
 function Profile() {
+  const { level } = useLevel();
   const { data: apps = [] } = useQuery({ queryKey: ["apps"], queryFn: fetchApplications });
   const { data: unis = [] } = useQuery({ queryKey: ["unis-all"], queryFn: () => fetchUniversities() });
   const [savedIds, setSavedIds] = useState<string[]>([]);
@@ -35,17 +36,22 @@ function Profile() {
     return () => window.removeEventListener("univers-saved-change", sync);
   }, []);
   const saved = unis.filter((u) => savedIds.includes(u.id));
+  const currentIdx = LEVELS.findIndex((l) => l.id === level);
 
   return (
     <Shell>
       <TopBar />
+      <LevelSelector />
 
       <div className="mt-5 glass-strong rounded-3xl p-5 flex items-center gap-4 animate-fade-up">
         <div className="w-16 h-16 rounded-full gradient-primary grid place-items-center text-white text-xl font-bold shadow-xl">IS</div>
         <div className="flex-1 min-w-0">
           <h1 className="text-lg font-bold leading-tight">Ilham Syahwana</h1>
           <p className="text-xs text-muted-foreground">Jakarta, Indonesia</p>
-          <p className="text-[11px] mt-1 text-gradient-primary font-medium">Aspiring Software Engineer</p>
+          <div className="mt-1.5 inline-flex items-center gap-1 glass rounded-full px-2 py-0.5">
+            <GraduationCap className="w-3 h-3 text-primary" />
+            <span className="text-[10px] font-semibold text-gradient-primary">{levelLabel(level)}</span>
+          </div>
         </div>
         <button className="press glass w-9 h-9 rounded-full grid place-items-center"><Settings className="w-4 h-4" /></button>
       </div>
@@ -55,6 +61,43 @@ function Profile() {
         <StatCard icon={Heart} label="Saved" value={saved.length} />
         <StatCard icon={Award} label="Achievements" value={3} />
       </div>
+
+      <Section title="Target School">
+        <div className="glass-strong rounded-2xl p-4 flex items-center gap-3">
+          <div className="w-10 h-10 rounded-xl gradient-primary grid place-items-center shrink-0">
+            <Target className="w-5 h-5 text-white" />
+          </div>
+          <div className="flex-1 min-w-0">
+            <div className="text-[10px] uppercase tracking-wide text-muted-foreground">{levelLabel(level)} goal</div>
+            <div className="text-sm font-semibold truncate">{TARGET_BY_LEVEL[level]}</div>
+          </div>
+        </div>
+      </Section>
+
+      <Section title="Academic Journey">
+        <div className="glass rounded-2xl p-4">
+          <div className="relative">
+            {LEVELS.map((l, i) => {
+              const done = i < currentIdx;
+              const active = i === currentIdx;
+              return (
+                <div key={l.id} className="flex items-center gap-3 py-1.5">
+                  <div className={`w-7 h-7 rounded-full grid place-items-center shrink-0 text-[10px] font-bold transition ${
+                    active ? "gradient-primary text-white shadow-lg" :
+                    done ? "bg-primary/15 text-primary" : "glass text-muted-foreground"
+                  }`}>
+                    {done ? "✓" : i + 1}
+                  </div>
+                  <div className="flex-1">
+                    <div className={`text-xs font-semibold ${active ? "text-gradient-primary" : done ? "text-foreground" : "text-muted-foreground"}`}>{l.label}</div>
+                  </div>
+                  {active && <span className="text-[10px] text-primary font-medium">Current</span>}
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </Section>
 
       <Section title="My Applications">
         {apps.length === 0 ? (
