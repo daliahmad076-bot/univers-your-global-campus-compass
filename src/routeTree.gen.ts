@@ -9,38 +9,148 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SearchRouteImport } from './routes/search'
+import { Route as ScheduleRouteImport } from './routes/schedule'
+import { Route as ProfileRouteImport } from './routes/profile'
+import { Route as ChatRouteImport } from './routes/chat'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as UniversityIdRouteImport } from './routes/university.$id'
+import { Route as ApplyIdRouteImport } from './routes/apply.$id'
 
+const SearchRoute = SearchRouteImport.update({
+  id: '/search',
+  path: '/search',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ScheduleRoute = ScheduleRouteImport.update({
+  id: '/schedule',
+  path: '/schedule',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProfileRoute = ProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ChatRoute = ChatRouteImport.update({
+  id: '/chat',
+  path: '/chat',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const UniversityIdRoute = UniversityIdRouteImport.update({
+  id: '/university/$id',
+  path: '/university/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApplyIdRoute = ApplyIdRouteImport.update({
+  id: '/apply/$id',
+  path: '/apply/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/chat': typeof ChatRoute
+  '/profile': typeof ProfileRoute
+  '/schedule': typeof ScheduleRoute
+  '/search': typeof SearchRoute
+  '/apply/$id': typeof ApplyIdRoute
+  '/university/$id': typeof UniversityIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/chat': typeof ChatRoute
+  '/profile': typeof ProfileRoute
+  '/schedule': typeof ScheduleRoute
+  '/search': typeof SearchRoute
+  '/apply/$id': typeof ApplyIdRoute
+  '/university/$id': typeof UniversityIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/chat': typeof ChatRoute
+  '/profile': typeof ProfileRoute
+  '/schedule': typeof ScheduleRoute
+  '/search': typeof SearchRoute
+  '/apply/$id': typeof ApplyIdRoute
+  '/university/$id': typeof UniversityIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/chat'
+    | '/profile'
+    | '/schedule'
+    | '/search'
+    | '/apply/$id'
+    | '/university/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/chat'
+    | '/profile'
+    | '/schedule'
+    | '/search'
+    | '/apply/$id'
+    | '/university/$id'
+  id:
+    | '__root__'
+    | '/'
+    | '/chat'
+    | '/profile'
+    | '/schedule'
+    | '/search'
+    | '/apply/$id'
+    | '/university/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ChatRoute: typeof ChatRoute
+  ProfileRoute: typeof ProfileRoute
+  ScheduleRoute: typeof ScheduleRoute
+  SearchRoute: typeof SearchRoute
+  ApplyIdRoute: typeof ApplyIdRoute
+  UniversityIdRoute: typeof UniversityIdRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/search': {
+      id: '/search'
+      path: '/search'
+      fullPath: '/search'
+      preLoaderRoute: typeof SearchRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/schedule': {
+      id: '/schedule'
+      path: '/schedule'
+      fullPath: '/schedule'
+      preLoaderRoute: typeof ScheduleRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/profile': {
+      id: '/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof ProfileRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/chat': {
+      id: '/chat'
+      path: '/chat'
+      fullPath: '/chat'
+      preLoaderRoute: typeof ChatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,11 +158,31 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/university/$id': {
+      id: '/university/$id'
+      path: '/university/$id'
+      fullPath: '/university/$id'
+      preLoaderRoute: typeof UniversityIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/apply/$id': {
+      id: '/apply/$id'
+      path: '/apply/$id'
+      fullPath: '/apply/$id'
+      preLoaderRoute: typeof ApplyIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ChatRoute: ChatRoute,
+  ProfileRoute: ProfileRoute,
+  ScheduleRoute: ScheduleRoute,
+  SearchRoute: SearchRoute,
+  ApplyIdRoute: ApplyIdRoute,
+  UniversityIdRoute: UniversityIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
