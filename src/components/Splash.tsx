@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { GraduationCap } from "lucide-react";
+import logo from "@/assets/logo.jpg";
 
 export default function Splash({ onDone }: { onDone: () => void }) {
   const [leaving, setLeaving] = useState(false);
@@ -24,9 +24,9 @@ export default function Splash({ onDone }: { onDone: () => void }) {
       <div className="relative flex flex-col items-center gap-6 animate-scale-in">
         <div className="relative">
           <div className="absolute inset-0 rounded-3xl blur-2xl opacity-70 gradient-primary animate-float" />
-          <div className="relative w-28 h-28 rounded-3xl gradient-primary flex items-center justify-center shadow-2xl"
+          <div className="relative w-28 h-28 rounded-3xl bg-white flex items-center justify-center shadow-2xl overflow-hidden"
                style={{ transform: "perspective(600px) rotateX(15deg)" }}>
-            <GraduationCap className="w-14 h-14 text-white drop-shadow-lg" strokeWidth={2.2} />
+            <img src={logo} alt="Univers logo" className="w-20 h-20 object-contain" />
           </div>
         </div>
         <div className="text-center animate-fade-up" style={{ animationDelay: "0.2s" }}>
