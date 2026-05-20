@@ -3,6 +3,7 @@ import { Outlet, createRootRouteWithContext, HeadContent, Scripts } from "@tanst
 import { useEffect, useState } from "react";
 import appCss from "../styles.css?url";
 import { ThemeProvider } from "@/lib/theme";
+import { LevelProvider } from "@/lib/level";
 import Splash from "@/components/Splash";
 import { Toaster } from "sonner";
 
@@ -46,9 +47,11 @@ function RootComponent() {
   return (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider>
-        {showSplash && <Splash onDone={() => { sessionStorage.setItem("univers-splash-seen","1"); setShowSplash(false); }} />}
-        <Outlet />
-        <Toaster position="top-center" richColors />
+        <LevelProvider>
+          {showSplash && <Splash onDone={() => { sessionStorage.setItem("univers-splash-seen","1"); setShowSplash(false); }} />}
+          <Outlet />
+          <Toaster position="top-center" richColors />
+        </LevelProvider>
       </ThemeProvider>
     </QueryClientProvider>
   );
