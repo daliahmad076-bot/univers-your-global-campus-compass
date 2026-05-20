@@ -18,6 +18,7 @@ export type Database = {
         Row: {
           created_at: string
           cv_url: string | null
+          education_level: string
           email: string
           full_name: string
           gpa: number | null
@@ -32,6 +33,7 @@ export type Database = {
         Insert: {
           created_at?: string
           cv_url?: string | null
+          education_level?: string
           email: string
           full_name: string
           gpa?: number | null
@@ -46,6 +48,7 @@ export type Database = {
         Update: {
           created_at?: string
           cv_url?: string | null
+          education_level?: string
           email?: string
           full_name?: string
           gpa?: number | null
@@ -70,18 +73,21 @@ export type Database = {
       categories: {
         Row: {
           created_at: string
+          education_level: string
           icon: string
           id: string
           name: string
         }
         Insert: {
           created_at?: string
+          education_level?: string
           icon: string
           id?: string
           name: string
         }
         Update: {
           created_at?: string
+          education_level?: string
           icon?: string
           id?: string
           name?: string
@@ -94,6 +100,7 @@ export type Database = {
           country: string
           created_at: string
           description: string | null
+          education_level: string
           global_ranking: number | null
           id: string
           image_url: string | null
@@ -111,6 +118,7 @@ export type Database = {
           country: string
           created_at?: string
           description?: string | null
+          education_level?: string
           global_ranking?: number | null
           id?: string
           image_url?: string | null
@@ -128,6 +136,7 @@ export type Database = {
           country?: string
           created_at?: string
           description?: string | null
+          education_level?: string
           global_ranking?: number | null
           id?: string
           image_url?: string | null
