@@ -3,7 +3,9 @@ import { useQuery } from "@tanstack/react-query";
 import { ArrowLeft, Search, Star, SlidersHorizontal } from "lucide-react";
 import { useState } from "react";
 import Shell from "@/components/Shell";
+import LevelSelector from "@/components/LevelSelector";
 import { fetchUniversities } from "@/lib/db";
+import { useLevel } from "@/lib/level";
 
 type Params = { q?: string; category?: string; country?: string };
 export const Route = createFileRoute("/search")({
@@ -43,6 +45,7 @@ function SearchPage() {
           <SlidersHorizontal className="w-4 h-4" />
         </button>
       </div>
+      <LevelSelector />
 
       <div className="mt-3 glass-strong rounded-full px-4 py-3 flex items-center gap-3 animate-fade-up">
         <Search className="w-4 h-4 text-muted-foreground" />
