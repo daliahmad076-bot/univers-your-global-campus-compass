@@ -1,13 +1,23 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
-import { Award, BookOpen, ChevronRight, Heart, Settings } from "lucide-react";
+import { Award, BookOpen, ChevronRight, GraduationCap, Heart, Settings, Target } from "lucide-react";
 import { useEffect, useState } from "react";
 import Shell from "@/components/Shell";
 import TopBar from "@/components/TopBar";
+import LevelSelector from "@/components/LevelSelector";
 import { fetchApplications, fetchUniversities } from "@/lib/db";
 import { getSaved } from "@/lib/saved";
+import { useLevel, levelLabel, LEVELS, type EducationLevel } from "@/lib/level";
 
 export const Route = createFileRoute("/profile")({ component: Profile });
+
+const TARGET_BY_LEVEL: Record<EducationLevel, string> = {
+  TK: "Tunas Bangsa Kindergarten",
+  SD: "Global Mandiri Elementary",
+  SMP: "SMP Labschool Kebayoran",
+  SMA: "SMA Negeri 8 Jakarta",
+  UNIVERSITY: "National University of Singapore",
+};
 
 const STATUS_COLORS: Record<string, string> = {
   pending: "bg-amber-500/15 text-amber-600 dark:text-amber-400",
