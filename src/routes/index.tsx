@@ -35,6 +35,7 @@ function Home() {
   return (
     <Shell>
       <TopBar />
+      <LevelSelector />
 
       {/* Hero */}
       <div className="mt-5 animate-fade-up rounded-3xl p-5 text-white relative overflow-hidden shadow-xl"
@@ -44,10 +45,10 @@ function Home() {
         <div className="relative">
           <div className="inline-flex items-center gap-1.5 glass rounded-full px-2.5 py-1 text-[10px] font-medium"
                style={{ background: "rgba(255,255,255,0.2)", borderColor: "rgba(255,255,255,0.4)" }}>
-            <Sparkles className="w-3 h-3" /> AI-powered
+            <Sparkles className="w-3 h-3" /> {hero.tag} · {levelLabel(level)}
           </div>
-          <h2 className="mt-2 text-2xl font-bold leading-tight">Discover Your<br/>Future!</h2>
-          <p className="mt-1 text-xs text-white/85 max-w-[70%]">Find the right school or university, anywhere in the world.</p>
+          <h2 className="mt-2 text-2xl font-bold leading-tight whitespace-pre-line">{hero.title}</h2>
+          <p className="mt-1 text-xs text-white/85 max-w-[70%]">{hero.sub}</p>
           <button onClick={() => nav({ to: "/search" })}
             className="press mt-4 inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold"
             style={{ background: "rgba(255,255,255,0.2)", border: "1px solid rgba(255,255,255,0.5)", backdropFilter: "blur(10px)" }}>
