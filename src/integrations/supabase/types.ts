@@ -14,7 +14,134 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      applications: {
+        Row: {
+          created_at: string
+          cv_url: string | null
+          email: string
+          full_name: string
+          gpa: number | null
+          id: string
+          motivation: string | null
+          phone: string | null
+          program: string
+          status: string
+          university_id: string | null
+          university_name: string
+        }
+        Insert: {
+          created_at?: string
+          cv_url?: string | null
+          email: string
+          full_name: string
+          gpa?: number | null
+          id?: string
+          motivation?: string | null
+          phone?: string | null
+          program: string
+          status?: string
+          university_id?: string | null
+          university_name: string
+        }
+        Update: {
+          created_at?: string
+          cv_url?: string | null
+          email?: string
+          full_name?: string
+          gpa?: number | null
+          id?: string
+          motivation?: string | null
+          phone?: string | null
+          program?: string
+          status?: string
+          university_id?: string | null
+          university_name?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "applications_university_id_fkey"
+            columns: ["university_id"]
+            isOneToOne: false
+            referencedRelation: "universities"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      categories: {
+        Row: {
+          created_at: string
+          icon: string
+          id: string
+          name: string
+        }
+        Insert: {
+          created_at?: string
+          icon: string
+          id?: string
+          name: string
+        }
+        Update: {
+          created_at?: string
+          icon?: string
+          id?: string
+          name?: string
+        }
+        Relationships: []
+      }
+      universities: {
+        Row: {
+          category: string | null
+          country: string
+          created_at: string
+          description: string | null
+          global_ranking: number | null
+          id: string
+          image_url: string | null
+          is_popular: boolean | null
+          location: string
+          name: string
+          programs: string[] | null
+          rating: number | null
+          reviews_count: number | null
+          tuition_max: number | null
+          tuition_min: number | null
+        }
+        Insert: {
+          category?: string | null
+          country: string
+          created_at?: string
+          description?: string | null
+          global_ranking?: number | null
+          id?: string
+          image_url?: string | null
+          is_popular?: boolean | null
+          location: string
+          name: string
+          programs?: string[] | null
+          rating?: number | null
+          reviews_count?: number | null
+          tuition_max?: number | null
+          tuition_min?: number | null
+        }
+        Update: {
+          category?: string | null
+          country?: string
+          created_at?: string
+          description?: string | null
+          global_ranking?: number | null
+          id?: string
+          image_url?: string | null
+          is_popular?: boolean | null
+          location?: string
+          name?: string
+          programs?: string[] | null
+          rating?: number | null
+          reviews_count?: number | null
+          tuition_max?: number | null
+          tuition_min?: number | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
