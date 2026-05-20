@@ -4,17 +4,29 @@ import { ChevronRight, Search, Star, Sparkles } from "lucide-react";
 import * as Icons from "lucide-react";
 import Shell from "@/components/Shell";
 import TopBar from "@/components/TopBar";
+import LevelSelector from "@/components/LevelSelector";
 import { fetchCategories, fetchUniversities } from "@/lib/db";
+import { useLevel, levelLabel } from "@/lib/level";
 import { useState } from "react";
 
 export const Route = createFileRoute("/")({ component: Home });
 
+const HERO_BY_LEVEL: Record<string, { tag: string; title: string; sub: string }> = {
+  TK: { tag: "AI-powered", title: "Start Their\nJourney!", sub: "Discover premium kindergartens & parenting programs." },
+  SD: { tag: "AI-powered", title: "Build Strong\nFoundations!", sub: "Find elementary schools that nurture curious minds." },
+  SMP: { tag: "AI-powered", title: "Grow Their\nTalents!", sub: "Top junior high schools with STEM, sports & language." },
+  SMA: { tag: "AI-powered", title: "Prepare For\nThe Future!", sub: "Senior high & vocational schools with scholarship pipelines." },
+  UNIVERSITY: { tag: "AI-powered", title: "Discover Your\nFuture!", sub: "Find the right university, anywhere in the world." },
+};
+
 function Home() {
   const nav = useNavigate();
   const [q, setQ] = useState("");
-  const { data: categories = [] } = useQuery({ queryKey: ["cats"], queryFn: fetchCategories });
-  const { data: universities = [] } = useQuery({ queryKey: ["unis-popular"], queryFn: () => fetchUniversities() });
+  const { level } = useLevel();
+  const { data: categories = [] } = useQuery({ queryKey: ["cats", level], queryFn: () => fetchCategories(level) });
+  const { data: universities = [] } = useQuery({ queryKey: ["unis-popular", level], queryFn: () => fetchUniversities({ level }) });
   const popular = universities.filter((u) => u.is_popular).slice(0, 8);
+  const hero = HERO_BY_LEVEL[level];
 
   function go() {
     nav({ to: "/search", search: { q } as any });
