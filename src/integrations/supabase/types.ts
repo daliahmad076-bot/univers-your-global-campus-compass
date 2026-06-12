@@ -96,6 +96,7 @@ export type Database = {
       }
       universities: {
         Row: {
+          accreditation: string | null
           category: string | null
           country: string
           created_at: string
@@ -104,16 +105,21 @@ export type Database = {
           global_ranking: number | null
           id: string
           image_url: string | null
+          is_featured: boolean | null
           is_popular: boolean | null
           location: string
           name: string
           programs: string[] | null
           rating: number | null
+          region: string | null
           reviews_count: number | null
           tuition_max: number | null
           tuition_min: number | null
+          type: string | null
+          website: string | null
         }
         Insert: {
+          accreditation?: string | null
           category?: string | null
           country: string
           created_at?: string
@@ -122,16 +128,21 @@ export type Database = {
           global_ranking?: number | null
           id?: string
           image_url?: string | null
+          is_featured?: boolean | null
           is_popular?: boolean | null
           location: string
           name: string
           programs?: string[] | null
           rating?: number | null
+          region?: string | null
           reviews_count?: number | null
           tuition_max?: number | null
           tuition_min?: number | null
+          type?: string | null
+          website?: string | null
         }
         Update: {
+          accreditation?: string | null
           category?: string | null
           country?: string
           created_at?: string
@@ -140,14 +151,18 @@ export type Database = {
           global_ranking?: number | null
           id?: string
           image_url?: string | null
+          is_featured?: boolean | null
           is_popular?: boolean | null
           location?: string
           name?: string
           programs?: string[] | null
           rating?: number | null
+          region?: string | null
           reviews_count?: number | null
           tuition_max?: number | null
           tuition_min?: number | null
+          type?: string | null
+          website?: string | null
         }
         Relationships: []
       }
