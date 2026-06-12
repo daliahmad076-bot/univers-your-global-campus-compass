@@ -5,8 +5,9 @@ import * as Icons from "lucide-react";
 import Shell from "@/components/Shell";
 import TopBar from "@/components/TopBar";
 import LevelSelector from "@/components/LevelSelector";
-import { fetchCategories, fetchUniversities } from "@/lib/db";
+import { fetchCategories, fetchUniversities, initials } from "@/lib/db";
 import { useLevel, levelLabel } from "@/lib/level";
+import { isNearKalsel, useGeo } from "@/lib/geolocation";
 import { useState } from "react";
 
 export const Route = createFileRoute("/")({ component: Home });
@@ -23,9 +24,11 @@ function Home() {
   const nav = useNavigate();
   const [q, setQ] = useState("");
   const { level } = useLevel();
+  const geo = useGeo();
+  const near = isNearKalsel(geo);
   const { data: categories = [] } = useQuery({ queryKey: ["cats", level], queryFn: () => fetchCategories(level) });
   const { data: universities = [] } = useQuery({ queryKey: ["unis-popular", level], queryFn: () => fetchUniversities({ level }) });
-  const popular = universities.filter((u) => u.is_popular).slice(0, 8);
+  const popular = universities.filter((u) => u.is_popular || u.is_featured).slice(0, 10);
   const hero = HERO_BY_LEVEL[level];
 
   function go() {
