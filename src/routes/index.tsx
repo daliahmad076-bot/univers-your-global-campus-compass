@@ -104,26 +104,43 @@ function Home() {
 
       {/* Popular */}
       <section className="mt-7 animate-fade-up" style={{ animationDelay: "0.15s" }}>
-        <Header title="Popular Schools" to="/search" />
+        <Header title="Sekolah Populer" to="/search" />
         <div className="mt-3 -mx-4 px-4 flex gap-3 overflow-x-auto hide-scrollbar snap-x snap-mandatory">
-          {popular.map((u) => (
-            <Link key={u.id} to="/university/$id" params={{ id: u.id }}
-                  className="press snap-start shrink-0 w-60 glass rounded-2xl overflow-hidden">
-              <div className="h-32 w-full bg-muted relative">
-                {u.image_url && <img src={u.image_url} alt={u.name} className="w-full h-full object-cover" loading="lazy" />}
-                <div className="absolute top-2 right-2 glass rounded-full px-2 py-0.5 text-[10px] flex items-center gap-1">
-                  <Star className="w-3 h-3 fill-amber-400 stroke-amber-400" /> {u.rating}
+          {popular.map((u) => {
+            const isKalsel = u.region === "Kalimantan" && (u.location.includes("Kalimantan Selatan") || u.location.includes("Banjarbaru") || u.location.includes("Banjarmasin"));
+            return (
+              <Link key={u.id} to="/university/$id" params={{ id: u.id }}
+                    className="press snap-start shrink-0 w-60 glass rounded-2xl overflow-hidden">
+                <div className="h-28 w-full relative grid place-items-center text-white"
+                     style={{ background: u.is_featured ? "linear-gradient(135deg,#F5B97A,#F4845F)" : "var(--grad-primary)" }}>
+                  {u.image_url ? (
+                    <img src={u.image_url} alt={u.name} className="absolute inset-0 w-full h-full object-cover" loading="lazy" />
+                  ) : (
+                    <span className="text-3xl font-extrabold tracking-tight">{initials(u.name)}</span>
+                  )}
+                  <div className="absolute top-2 right-2 glass rounded-full px-2 py-0.5 text-[10px] flex items-center gap-1">
+                    <Star className="w-3 h-3 fill-amber-400 stroke-amber-400" /> {u.rating}
+                  </div>
+                  {u.is_featured && (
+                    <div className="absolute top-2 left-2 rounded-full px-2 py-0.5 text-[9px] font-bold text-white inline-flex items-center gap-0.5 bg-black/30 backdrop-blur">
+                      <Sparkles className="w-2.5 h-2.5" /> Featured
+                    </div>
+                  )}
                 </div>
-              </div>
-              <div className="p-3">
-                <p className="text-xs font-semibold line-clamp-2 leading-tight">{u.name}</p>
-                <p className="text-[10px] text-muted-foreground mt-1">{u.location}</p>
-                <p className="text-[11px] mt-2 font-medium text-gradient-primary">
-                  ${u.tuition_min?.toLocaleString()}–${u.tuition_max?.toLocaleString()}/yr
-                </p>
-              </div>
-            </Link>
-          ))}
+                <div className="p-3">
+                  <p className="text-xs font-semibold line-clamp-2 leading-tight">{u.name}</p>
+                  <p className="text-[10px] text-muted-foreground mt-1 line-clamp-1">{u.location}</p>
+                  <div className="mt-2 flex items-center gap-1 flex-wrap text-[9px]">
+                    {u.type && <span className="px-1.5 py-0.5 rounded-md bg-primary/10 text-primary font-medium">{u.type}</span>}
+                    {u.accreditation && <span className="px-1.5 py-0.5 rounded-md bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-medium">{u.accreditation}</span>}
+                    {near && isKalsel && (
+                      <span className="px-1.5 py-0.5 rounded-md bg-blue-500/10 text-blue-600 dark:text-blue-400 font-medium">Dekat Anda</span>
+                    )}
+                  </div>
+                </div>
+              </Link>
+            );
+          })}
         </div>
       </section>
     </Shell>
