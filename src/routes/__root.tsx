@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import appCss from "../styles.css?url";
 import { ThemeProvider } from "@/lib/theme";
 import { LevelProvider } from "@/lib/level";
+import { GeoProvider } from "@/lib/geolocation";
 import Splash from "@/components/Splash";
 import { Toaster } from "sonner";
 
@@ -52,9 +53,11 @@ function RootComponent() {
     <QueryClientProvider client={queryClient}>
       <ThemeProvider>
         <LevelProvider>
-          {showSplash && <Splash onDone={() => { sessionStorage.setItem("univers-splash-seen","1"); setShowSplash(false); }} />}
-          <Outlet />
-          <Toaster position="top-center" richColors />
+          <GeoProvider>
+            {showSplash && <Splash onDone={() => { sessionStorage.setItem("univers-splash-seen","1"); setShowSplash(false); }} />}
+            <Outlet />
+            <Toaster position="top-center" richColors />
+          </GeoProvider>
         </LevelProvider>
       </ThemeProvider>
     </QueryClientProvider>

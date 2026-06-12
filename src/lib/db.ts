@@ -17,18 +17,34 @@ export type University = {
   category: string | null;
   is_popular: boolean | null;
   education_level: EducationLevel;
+  type: string | null;
+  accreditation: string | null;
+  region: string | null;
+  website: string | null;
+  is_featured: boolean | null;
 };
 export type Category = { id: string; name: string; icon: string; education_level: EducationLevel };
 
 export async function fetchUniversities(filters?: {
-  q?: string; country?: string; category?: string; maxTuition?: number; level?: EducationLevel;
+  q?: string;
+  region?: string;
+  type?: string;
+  accreditation?: string;
+  category?: string;
+  level?: EducationLevel;
 }) {
-  let qb = supabase.from("universities").select("*").order("global_ranking", { ascending: true, nullsFirst: false });
+  let qb = supabase
+    .from("universities")
+    .select("*")
+    .order("is_featured", { ascending: false })
+    .order("global_ranking", { ascending: true, nullsFirst: false })
+    .order("rating", { ascending: false, nullsFirst: false });
   if (filters?.level) qb = qb.eq("education_level", filters.level);
   if (filters?.q) qb = qb.ilike("name", `%${filters.q}%`);
-  if (filters?.country && filters.country !== "All") qb = qb.eq("country", filters.country);
-  if (filters?.category && filters.category !== "All") qb = qb.eq("category", filters.category);
-  if (filters?.maxTuition) qb = qb.lte("tuition_min", filters.maxTuition);
+  if (filters?.region && filters.region !== "Semua") qb = qb.eq("region", filters.region);
+  if (filters?.type && filters.type !== "Semua") qb = qb.eq("type", filters.type);
+  if (filters?.accreditation && filters.accreditation !== "Semua") qb = qb.eq("accreditation", filters.accreditation);
+  if (filters?.category && filters.category !== "Semua") qb = qb.eq("category", filters.category);
   const { data, error } = await qb;
   if (error) throw error;
   return (data ?? []) as University[];
@@ -62,4 +78,10 @@ export async function fetchApplications() {
   const { data, error } = await supabase.from("applications").select("*").order("created_at", { ascending: false });
   if (error) throw error;
   return data ?? [];
+}
+
+export function initials(name: string) {
+  const cleaned = name.replace(/\(.*?\)/g, "").trim();
+  const words = cleaned.split(/\s+/).filter(Boolean);
+  return (words[0]?.[0] ?? "") + (words[1]?.[0] ?? "");
 }
