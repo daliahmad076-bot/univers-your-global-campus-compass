@@ -51,7 +51,7 @@ function UniDetail() {
         <p className="mt-4 text-sm leading-relaxed text-muted-foreground">{u.description}</p>
 
         <div className="mt-5 grid grid-cols-2 gap-3">
-          <Stat label="Tuition" value={`$${u.tuition_min?.toLocaleString()}+`} />
+          <Stat label="Akreditasi" value={u.accreditation ?? "—"} />
           <Stat label="Global Rank" value={u.global_ranking ? `#${u.global_ranking}` : "—"} />
         </div>
 
