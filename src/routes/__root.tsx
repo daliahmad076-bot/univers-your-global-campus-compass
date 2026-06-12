@@ -53,9 +53,11 @@ function RootComponent() {
     <QueryClientProvider client={queryClient}>
       <ThemeProvider>
         <LevelProvider>
-          {showSplash && <Splash onDone={() => { sessionStorage.setItem("univers-splash-seen","1"); setShowSplash(false); }} />}
-          <Outlet />
-          <Toaster position="top-center" richColors />
+          <GeoProvider>
+            {showSplash && <Splash onDone={() => { sessionStorage.setItem("univers-splash-seen","1"); setShowSplash(false); }} />}
+            <Outlet />
+            <Toaster position="top-center" richColors />
+          </GeoProvider>
         </LevelProvider>
       </ThemeProvider>
     </QueryClientProvider>
