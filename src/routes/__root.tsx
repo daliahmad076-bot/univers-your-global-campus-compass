@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import appCss from "../styles.css?url";
 import { ThemeProvider } from "@/lib/theme";
 import { LevelProvider } from "@/lib/level";
+import { GeoProvider } from "@/lib/geolocation";
 import Splash from "@/components/Splash";
 import { Toaster } from "sonner";
 
