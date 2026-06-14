@@ -1,7 +1,8 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
-import { ArrowLeft, Star, MapPin, Award, Heart, Check } from "lucide-react";
+import { ArrowLeft, Star, MapPin, Award, Heart, Check, MessageCircle, Phone, Video, Globe } from "lucide-react";
 import { useEffect, useState } from "react";
+import { toast } from "sonner";
 import Shell from "@/components/Shell";
 import { fetchUniversity } from "@/lib/db";
 import { getSaved, toggleSaved } from "@/lib/saved";
@@ -20,6 +21,12 @@ function UniDetail() {
   }, [id]);
 
   if (!u) return <Shell><div className="pt-10 text-center text-sm text-muted-foreground">Loading…</div></Shell>;
+
+  function visitWebsite() {
+    if (!u?.website) { toast.error("Website sedang tidak tersedia"); return; }
+    const url = u.website.startsWith("http") ? u.website : `https://${u.website}`;
+    window.open(url, "_blank", "noopener,noreferrer");
+  }
 
   return (
     <Shell hideNav>
@@ -55,6 +62,14 @@ function UniDetail() {
           <Stat label="Global Rank" value={u.global_ranking ? `#${u.global_ranking}` : "—"} />
         </div>
 
+        {/* Contact Us */}
+        <h3 className="mt-6 text-sm font-bold">Contact Us</h3>
+        <div className="mt-2 grid grid-cols-3 gap-2">
+          <ContactBtn to="/contact/$id/chat" id={id} icon={<MessageCircle className="w-5 h-5" />} label="Chat" badge />
+          <ContactBtn to="/contact/$id/call" id={id} icon={<Phone className="w-5 h-5" />} label="Telepon" />
+          <ContactBtn to="/contact/$id/video" id={id} icon={<Video className="w-5 h-5" />} label="Video" />
+        </div>
+
         <h3 className="mt-6 text-sm font-bold">Available Programs</h3>
         <div className="mt-2 flex flex-wrap gap-1.5">
           {(u.programs ?? []).map((p) => (
@@ -68,15 +83,32 @@ function UniDetail() {
             <li key={r} className="flex gap-2"><Check className="w-4 h-4 text-primary shrink-0" />{r}</li>
           ))}
         </ul>
+        <div className="h-20" />
       </div>
 
-      <div className="fixed bottom-6 left-1/2 -translate-x-1/2 w-[calc(100%-2rem)] max-w-md z-40">
-        <Link to="/apply/$id" params={{ id: u.id }} className="press block w-full text-center rounded-full gradient-primary text-white py-4 font-semibold shadow-2xl"
+      <div className="fixed bottom-6 left-1/2 -translate-x-1/2 w-[calc(100%-2rem)] max-w-md z-40 flex gap-2">
+        <Link to="/apply/$id" params={{ id: u.id }} className="press flex-1 text-center rounded-full gradient-primary text-white py-4 font-semibold shadow-2xl"
               style={{ boxShadow: "0 20px 50px -10px rgba(0,97,255,0.6)" }}>
           Apply Now
         </Link>
+        <button onClick={visitWebsite}
+                className="press shrink-0 rounded-full py-4 px-5 font-semibold inline-flex items-center gap-2 border-2 border-primary text-primary bg-background/90 backdrop-blur">
+          <Globe className="w-4 h-4" /> Website
+        </button>
       </div>
     </Shell>
+  );
+}
+
+function ContactBtn({ to, id, icon, label, badge }: { to: "/contact/$id/chat" | "/contact/$id/call" | "/contact/$id/video"; id: string; icon: React.ReactNode; label: string; badge?: boolean }) {
+  return (
+    <Link to={to} params={{ id }} className="press relative glass rounded-2xl p-3 flex flex-col items-center gap-1.5 hover:bg-primary/5 transition">
+      <div className="w-10 h-10 rounded-full grid place-items-center text-white" style={{ background: "var(--grad-primary)" }}>
+        {icon}
+      </div>
+      <span className="text-[11px] font-medium">{label}</span>
+      {badge && <span className="absolute top-2 right-2 min-w-[18px] h-[18px] px-1 rounded-full bg-red-500 text-white text-[10px] font-bold grid place-items-center">1</span>}
+    </Link>
   );
 }
 

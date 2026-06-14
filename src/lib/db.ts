@@ -47,7 +47,8 @@ export async function fetchUniversities(filters?: {
   if (filters?.category && filters.category !== "Semua") qb = qb.eq("category", filters.category);
   const { data, error } = await qb;
   if (error) throw error;
-  return (data ?? []) as University[];
+  const { enrich } = await import("./school-overrides");
+  return ((data ?? []) as University[]).map(enrich);
 }
 
 export async function fetchCategories(level?: EducationLevel) {
@@ -61,7 +62,9 @@ export async function fetchCategories(level?: EducationLevel) {
 export async function fetchUniversity(id: string) {
   const { data, error } = await supabase.from("universities").select("*").eq("id", id).maybeSingle();
   if (error) throw error;
-  return data as University | null;
+  if (!data) return null;
+  const { enrich } = await import("./school-overrides");
+  return enrich(data as University);
 }
 
 export async function submitApplication(input: {
