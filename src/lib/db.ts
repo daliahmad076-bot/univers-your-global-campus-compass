@@ -47,7 +47,8 @@ export async function fetchUniversities(filters?: {
   if (filters?.category && filters.category !== "Semua") qb = qb.eq("category", filters.category);
   const { data, error } = await qb;
   if (error) throw error;
-  return (data ?? []) as University[];
+  const { enrich } = await import("./school-overrides");
+  return ((data ?? []) as University[]).map(enrich);
 }
 
 export async function fetchCategories(level?: EducationLevel) {
