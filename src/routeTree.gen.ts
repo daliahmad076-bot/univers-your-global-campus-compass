@@ -16,6 +16,9 @@ import { Route as ChatRouteImport } from './routes/chat'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as UniversityIdRouteImport } from './routes/university.$id'
 import { Route as ApplyIdRouteImport } from './routes/apply.$id'
+import { Route as ContactIdVideoRouteImport } from './routes/contact.$id.video'
+import { Route as ContactIdChatRouteImport } from './routes/contact.$id.chat'
+import { Route as ContactIdCallRouteImport } from './routes/contact.$id.call'
 
 const SearchRoute = SearchRouteImport.update({
   id: '/search',
@@ -52,6 +55,21 @@ const ApplyIdRoute = ApplyIdRouteImport.update({
   path: '/apply/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ContactIdVideoRoute = ContactIdVideoRouteImport.update({
+  id: '/contact/$id/video',
+  path: '/contact/$id/video',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContactIdChatRoute = ContactIdChatRouteImport.update({
+  id: '/contact/$id/chat',
+  path: '/contact/$id/chat',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContactIdCallRoute = ContactIdCallRouteImport.update({
+  id: '/contact/$id/call',
+  path: '/contact/$id/call',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -61,6 +79,9 @@ export interface FileRoutesByFullPath {
   '/search': typeof SearchRoute
   '/apply/$id': typeof ApplyIdRoute
   '/university/$id': typeof UniversityIdRoute
+  '/contact/$id/call': typeof ContactIdCallRoute
+  '/contact/$id/chat': typeof ContactIdChatRoute
+  '/contact/$id/video': typeof ContactIdVideoRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -70,6 +91,9 @@ export interface FileRoutesByTo {
   '/search': typeof SearchRoute
   '/apply/$id': typeof ApplyIdRoute
   '/university/$id': typeof UniversityIdRoute
+  '/contact/$id/call': typeof ContactIdCallRoute
+  '/contact/$id/chat': typeof ContactIdChatRoute
+  '/contact/$id/video': typeof ContactIdVideoRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -80,6 +104,9 @@ export interface FileRoutesById {
   '/search': typeof SearchRoute
   '/apply/$id': typeof ApplyIdRoute
   '/university/$id': typeof UniversityIdRoute
+  '/contact/$id/call': typeof ContactIdCallRoute
+  '/contact/$id/chat': typeof ContactIdChatRoute
+  '/contact/$id/video': typeof ContactIdVideoRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -91,6 +118,9 @@ export interface FileRouteTypes {
     | '/search'
     | '/apply/$id'
     | '/university/$id'
+    | '/contact/$id/call'
+    | '/contact/$id/chat'
+    | '/contact/$id/video'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -100,6 +130,9 @@ export interface FileRouteTypes {
     | '/search'
     | '/apply/$id'
     | '/university/$id'
+    | '/contact/$id/call'
+    | '/contact/$id/chat'
+    | '/contact/$id/video'
   id:
     | '__root__'
     | '/'
@@ -109,6 +142,9 @@ export interface FileRouteTypes {
     | '/search'
     | '/apply/$id'
     | '/university/$id'
+    | '/contact/$id/call'
+    | '/contact/$id/chat'
+    | '/contact/$id/video'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -119,6 +155,9 @@ export interface RootRouteChildren {
   SearchRoute: typeof SearchRoute
   ApplyIdRoute: typeof ApplyIdRoute
   UniversityIdRoute: typeof UniversityIdRoute
+  ContactIdCallRoute: typeof ContactIdCallRoute
+  ContactIdChatRoute: typeof ContactIdChatRoute
+  ContactIdVideoRoute: typeof ContactIdVideoRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -172,6 +211,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApplyIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/contact/$id/video': {
+      id: '/contact/$id/video'
+      path: '/contact/$id/video'
+      fullPath: '/contact/$id/video'
+      preLoaderRoute: typeof ContactIdVideoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contact/$id/chat': {
+      id: '/contact/$id/chat'
+      path: '/contact/$id/chat'
+      fullPath: '/contact/$id/chat'
+      preLoaderRoute: typeof ContactIdChatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contact/$id/call': {
+      id: '/contact/$id/call'
+      path: '/contact/$id/call'
+      fullPath: '/contact/$id/call'
+      preLoaderRoute: typeof ContactIdCallRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -183,6 +243,9 @@ const rootRouteChildren: RootRouteChildren = {
   SearchRoute: SearchRoute,
   ApplyIdRoute: ApplyIdRoute,
   UniversityIdRoute: UniversityIdRoute,
+  ContactIdCallRoute: ContactIdCallRoute,
+  ContactIdChatRoute: ContactIdChatRoute,
+  ContactIdVideoRoute: ContactIdVideoRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
