@@ -83,12 +83,38 @@ function Home() {
 
       {/* Categories */}
       <section className="mt-7 animate-fade-up" style={{ animationDelay: "0.1s" }}>
-        <Header title="Field of Study" to="/search" />
+      {/* Shortcuts */}
+      <section className="mt-6 animate-fade-up" style={{ animationDelay: "0.08s" }}>
+        <div className="grid grid-cols-3 gap-3">
+          <Link to="/programs" className="press glass rounded-2xl p-3 flex flex-col items-center gap-1.5">
+            <div className="w-10 h-10 rounded-xl grid place-items-center" style={{ background: "color-mix(in oklab, var(--primary) 12%, transparent)" }}>
+              <Icons.BookOpen className="w-5 h-5 text-primary" />
+            </div>
+            <span className="text-[11px] font-medium">Program</span>
+          </Link>
+          <Link to="/scholarships" className="press glass rounded-2xl p-3 flex flex-col items-center gap-1.5">
+            <div className="w-10 h-10 rounded-xl grid place-items-center" style={{ background: "color-mix(in oklab, #F59E0B 18%, transparent)" }}>
+              <Icons.Award className="w-5 h-5" style={{ color: "#F59E0B" }} />
+            </div>
+            <span className="text-[11px] font-medium">Beasiswa</span>
+          </Link>
+          <Link to="/chat" className="press glass rounded-2xl p-3 flex flex-col items-center gap-1.5">
+            <div className="w-10 h-10 rounded-xl grid place-items-center" style={{ background: "color-mix(in oklab, #8B5CF6 18%, transparent)" }}>
+              <Icons.Sparkles className="w-5 h-5" style={{ color: "#8B5CF6" }} />
+            </div>
+            <span className="text-[11px] font-medium">AI Advisor</span>
+          </Link>
+        </div>
+      </section>
+
+      {/* Categories */}
+      <section className="mt-7 animate-fade-up" style={{ animationDelay: "0.1s" }}>
+        <Header title="Field of Study" to="/programs" />
         <div className="mt-3 grid grid-cols-2 gap-3">
           {categories.map((c) => {
             const Icon = (Icons as any)[c.icon] ?? Icons.BookOpen;
             return (
-              <Link key={c.id} to="/search" search={{ category: c.name } as any}
+              <Link key={c.id} to="/programs"
                     className="press glass rounded-2xl p-3 flex items-center gap-3 group">
                 <div className="w-9 h-9 rounded-xl grid place-items-center"
                      style={{ background: "color-mix(in oklab, var(--primary) 12%, transparent)" }}>
