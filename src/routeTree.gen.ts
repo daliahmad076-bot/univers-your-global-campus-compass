@@ -10,11 +10,16 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SearchRouteImport } from './routes/search'
+import { Route as ScholarshipsRouteImport } from './routes/scholarships'
 import { Route as ScheduleRouteImport } from './routes/schedule'
+import { Route as ProgramsRouteImport } from './routes/programs'
 import { Route as ProfileRouteImport } from './routes/profile'
+import { Route as MessagesRouteImport } from './routes/messages'
 import { Route as ChatRouteImport } from './routes/chat'
+import { Route as BookmarksRouteImport } from './routes/bookmarks'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as UniversityIdRouteImport } from './routes/university.$id'
+import { Route as ProgramIdRouteImport } from './routes/program.$id'
 import { Route as ApplyIdRouteImport } from './routes/apply.$id'
 import { Route as ContactIdVideoRouteImport } from './routes/contact.$id.video'
 import { Route as ContactIdChatRouteImport } from './routes/contact.$id.chat'
@@ -25,9 +30,19 @@ const SearchRoute = SearchRouteImport.update({
   path: '/search',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ScholarshipsRoute = ScholarshipsRouteImport.update({
+  id: '/scholarships',
+  path: '/scholarships',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ScheduleRoute = ScheduleRouteImport.update({
   id: '/schedule',
   path: '/schedule',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProgramsRoute = ProgramsRouteImport.update({
+  id: '/programs',
+  path: '/programs',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ProfileRoute = ProfileRouteImport.update({
@@ -35,9 +50,19 @@ const ProfileRoute = ProfileRouteImport.update({
   path: '/profile',
   getParentRoute: () => rootRouteImport,
 } as any)
+const MessagesRoute = MessagesRouteImport.update({
+  id: '/messages',
+  path: '/messages',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ChatRoute = ChatRouteImport.update({
   id: '/chat',
   path: '/chat',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BookmarksRoute = BookmarksRouteImport.update({
+  id: '/bookmarks',
+  path: '/bookmarks',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -48,6 +73,11 @@ const IndexRoute = IndexRouteImport.update({
 const UniversityIdRoute = UniversityIdRouteImport.update({
   id: '/university/$id',
   path: '/university/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProgramIdRoute = ProgramIdRouteImport.update({
+  id: '/program/$id',
+  path: '/program/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApplyIdRoute = ApplyIdRouteImport.update({
@@ -73,11 +103,16 @@ const ContactIdCallRoute = ContactIdCallRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/bookmarks': typeof BookmarksRoute
   '/chat': typeof ChatRoute
+  '/messages': typeof MessagesRoute
   '/profile': typeof ProfileRoute
+  '/programs': typeof ProgramsRoute
   '/schedule': typeof ScheduleRoute
+  '/scholarships': typeof ScholarshipsRoute
   '/search': typeof SearchRoute
   '/apply/$id': typeof ApplyIdRoute
+  '/program/$id': typeof ProgramIdRoute
   '/university/$id': typeof UniversityIdRoute
   '/contact/$id/call': typeof ContactIdCallRoute
   '/contact/$id/chat': typeof ContactIdChatRoute
@@ -85,11 +120,16 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/bookmarks': typeof BookmarksRoute
   '/chat': typeof ChatRoute
+  '/messages': typeof MessagesRoute
   '/profile': typeof ProfileRoute
+  '/programs': typeof ProgramsRoute
   '/schedule': typeof ScheduleRoute
+  '/scholarships': typeof ScholarshipsRoute
   '/search': typeof SearchRoute
   '/apply/$id': typeof ApplyIdRoute
+  '/program/$id': typeof ProgramIdRoute
   '/university/$id': typeof UniversityIdRoute
   '/contact/$id/call': typeof ContactIdCallRoute
   '/contact/$id/chat': typeof ContactIdChatRoute
@@ -98,11 +138,16 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/bookmarks': typeof BookmarksRoute
   '/chat': typeof ChatRoute
+  '/messages': typeof MessagesRoute
   '/profile': typeof ProfileRoute
+  '/programs': typeof ProgramsRoute
   '/schedule': typeof ScheduleRoute
+  '/scholarships': typeof ScholarshipsRoute
   '/search': typeof SearchRoute
   '/apply/$id': typeof ApplyIdRoute
+  '/program/$id': typeof ProgramIdRoute
   '/university/$id': typeof UniversityIdRoute
   '/contact/$id/call': typeof ContactIdCallRoute
   '/contact/$id/chat': typeof ContactIdChatRoute
@@ -112,11 +157,16 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/bookmarks'
     | '/chat'
+    | '/messages'
     | '/profile'
+    | '/programs'
     | '/schedule'
+    | '/scholarships'
     | '/search'
     | '/apply/$id'
+    | '/program/$id'
     | '/university/$id'
     | '/contact/$id/call'
     | '/contact/$id/chat'
@@ -124,11 +174,16 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/bookmarks'
     | '/chat'
+    | '/messages'
     | '/profile'
+    | '/programs'
     | '/schedule'
+    | '/scholarships'
     | '/search'
     | '/apply/$id'
+    | '/program/$id'
     | '/university/$id'
     | '/contact/$id/call'
     | '/contact/$id/chat'
@@ -136,11 +191,16 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/bookmarks'
     | '/chat'
+    | '/messages'
     | '/profile'
+    | '/programs'
     | '/schedule'
+    | '/scholarships'
     | '/search'
     | '/apply/$id'
+    | '/program/$id'
     | '/university/$id'
     | '/contact/$id/call'
     | '/contact/$id/chat'
@@ -149,11 +209,16 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  BookmarksRoute: typeof BookmarksRoute
   ChatRoute: typeof ChatRoute
+  MessagesRoute: typeof MessagesRoute
   ProfileRoute: typeof ProfileRoute
+  ProgramsRoute: typeof ProgramsRoute
   ScheduleRoute: typeof ScheduleRoute
+  ScholarshipsRoute: typeof ScholarshipsRoute
   SearchRoute: typeof SearchRoute
   ApplyIdRoute: typeof ApplyIdRoute
+  ProgramIdRoute: typeof ProgramIdRoute
   UniversityIdRoute: typeof UniversityIdRoute
   ContactIdCallRoute: typeof ContactIdCallRoute
   ContactIdChatRoute: typeof ContactIdChatRoute
@@ -169,11 +234,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SearchRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/scholarships': {
+      id: '/scholarships'
+      path: '/scholarships'
+      fullPath: '/scholarships'
+      preLoaderRoute: typeof ScholarshipsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/schedule': {
       id: '/schedule'
       path: '/schedule'
       fullPath: '/schedule'
       preLoaderRoute: typeof ScheduleRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/programs': {
+      id: '/programs'
+      path: '/programs'
+      fullPath: '/programs'
+      preLoaderRoute: typeof ProgramsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/profile': {
@@ -183,11 +262,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProfileRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/messages': {
+      id: '/messages'
+      path: '/messages'
+      fullPath: '/messages'
+      preLoaderRoute: typeof MessagesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/chat': {
       id: '/chat'
       path: '/chat'
       fullPath: '/chat'
       preLoaderRoute: typeof ChatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/bookmarks': {
+      id: '/bookmarks'
+      path: '/bookmarks'
+      fullPath: '/bookmarks'
+      preLoaderRoute: typeof BookmarksRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -202,6 +295,13 @@ declare module '@tanstack/react-router' {
       path: '/university/$id'
       fullPath: '/university/$id'
       preLoaderRoute: typeof UniversityIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/program/$id': {
+      id: '/program/$id'
+      path: '/program/$id'
+      fullPath: '/program/$id'
+      preLoaderRoute: typeof ProgramIdRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/apply/$id': {
@@ -237,11 +337,16 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  BookmarksRoute: BookmarksRoute,
   ChatRoute: ChatRoute,
+  MessagesRoute: MessagesRoute,
   ProfileRoute: ProfileRoute,
+  ProgramsRoute: ProgramsRoute,
   ScheduleRoute: ScheduleRoute,
+  ScholarshipsRoute: ScholarshipsRoute,
   SearchRoute: SearchRoute,
   ApplyIdRoute: ApplyIdRoute,
+  ProgramIdRoute: ProgramIdRoute,
   UniversityIdRoute: UniversityIdRoute,
   ContactIdCallRoute: ContactIdCallRoute,
   ContactIdChatRoute: ContactIdChatRoute,
@@ -250,13 +355,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
