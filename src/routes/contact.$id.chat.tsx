@@ -27,6 +27,18 @@ function ChatPage() {
 
   useEffect(() => { scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: "smooth" }); }, [msgs]);
 
+  useEffect(() => {
+    if (!u || msgs.length === 0) return;
+    try {
+      const raw = localStorage.getItem("univers-chat-threads");
+      const list: { id: string; last: string; ts: number }[] = raw ? JSON.parse(raw) : [];
+      const last = msgs[msgs.length - 1];
+      const next = [{ id, last: last.text, ts: Date.now() }, ...list.filter((t) => t.id !== id)];
+      localStorage.setItem("univers-chat-threads", JSON.stringify(next));
+      window.dispatchEvent(new Event("univers-chat-change"));
+    } catch {}
+  }, [msgs, u, id]);
+
   function send() {
     const t = text.trim();
     if (!t) return;
