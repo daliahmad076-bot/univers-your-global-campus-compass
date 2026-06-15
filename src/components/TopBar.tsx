@@ -8,9 +8,9 @@ export default function TopBar() {
   const label = geoLabel(geo);
   return (
     <div className="flex items-center justify-between pt-3 pb-2 animate-fade-in">
-      <button className="press flex items-center gap-2 glass rounded-full pl-3 pr-2 py-1.5" title={geo.status === "denied" ? "Akses lokasi ditolak" : label}>
+      <button suppressHydrationWarning className="press flex items-center gap-2 glass rounded-full pl-3 pr-2 py-1.5" title={geo.status === "denied" ? "Akses lokasi ditolak" : label}>
         <span className="w-2 h-2 rounded-full" style={{ background: "#0061FF", boxShadow: "0 0 0 3px rgba(0,97,255,0.25)" }} />
-        <span className="text-xs font-medium max-w-[140px] truncate">{label}</span>
+        <span suppressHydrationWarning className="text-xs font-medium max-w-[140px] truncate">{label}</span>
         {geo.status === "loading" && !geo.city ? (
           <Loader2 className="w-3.5 h-3.5 text-muted-foreground animate-spin" />
         ) : (
