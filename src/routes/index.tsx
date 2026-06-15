@@ -81,10 +81,9 @@ function Home() {
         </div>
       </div>
 
-      {/* Categories */}
-      <section className="mt-7 animate-fade-up" style={{ animationDelay: "0.1s" }}>
       {/* Shortcuts */}
       <section className="mt-6 animate-fade-up" style={{ animationDelay: "0.08s" }}>
+
         <div className="grid grid-cols-3 gap-3">
           <Link to="/programs" className="press glass rounded-2xl p-3 flex flex-col items-center gap-1.5">
             <div className="w-10 h-10 rounded-xl grid place-items-center" style={{ background: "color-mix(in oklab, var(--primary) 12%, transparent)" }}>
